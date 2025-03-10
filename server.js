@@ -3,7 +3,14 @@ const cors = require('cors');
 const mysql = require('mysql2');
 
 const app = express();
-app.use(cors());
+
+// Configure CORS to allow requests from your frontend
+app.use(cors({
+  origin: 'https://your-frontend-url.vercel.app', // Replace with your frontend URL
+  methods: ['GET', 'POST'], // Allow only necessary HTTP methods
+  credentials: true, // Allow cookies and credentials (if needed)
+}));
+
 app.use(express.json());
 
 // Create a MySQL connection
@@ -134,7 +141,7 @@ const checkWinner = (board) => {
 };
 
 // Start the server
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // Use environment variable for port
 app.listen(PORT, () => {
   console.log(`Backend running on http://localhost:${PORT}`);
 });
